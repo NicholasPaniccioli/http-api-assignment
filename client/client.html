@@ -15,6 +15,8 @@
       const h1 = document.createElement('h1');
       const p = document.createElement('p');
       const obj = JSON.parse(xhr.response);
+      const parser = new DOMParser();
+      const xm = parser.parseFromString(xhr.response, 'text/xml');
       
       if(type === 'application/json'){
 
@@ -32,20 +34,36 @@
             content.innerHTML = '<b>Error code not implemented by client!</b>';
             break;
         }
+        content.innerHTML += `<p>${obj.message}</p>`;
+
       } else if (type === 'text/xml'){
-        const message = xhr.responseXML.querySelector('message').textContent;
+
+        switch(xhr.status){
+          case 200:
+            content.innerHTML = '<b>Success!</b>';
+            break;
+          case 400:
+            content.innerHTML = '<b>Bad Request :(</b>';
+            break;
+          case 404:
+            content.innerHTML = '<b>Resource Not Found, Dawg!</b>';
+            break;
+          default:
+            content.innerHTML = '<b>Error code not implemented by client!</b>';
+            break;
+        }
+        //const message = xhr.responseXML.querySelector('message').textContent;
+        console.dir(xm);
+        content.innerHTML += `<p>${xm.message}</p>`;
       }
 
-      content.innerHTML += `<p>${obj.message}</p>`;
 
     };
 
     const sendAjax = (url, acceptedType) => {
       const xhr = new XMLHttpRequest();
       xhr.open('GET', url);
-      console.log(acceptedType);
       xhr.setRequestHeader('Accept', acceptedType);
-      console.log(acceptedType);
 
       xhr.onload = () => handleResponse(xhr);
       xhr.send();
