@@ -50,15 +50,15 @@
     };
 
     const init = () => {
-      const type = document.querySelector("#type").value;
-      const page = document.querySelector("#page").value;
+      const type = document.querySelector("#type");
+      const page = document.querySelector("#page");
 
       const sendButton = document.querySelector("#send");
 
-      const sendJSON = () => sendAjax(page,'application/json');
-      //const sendXML = () => sendAjax(page,'text/xml');
+      const sendJSON = () => sendAjax(page.value,'application/json');
+      const sendXML = () => sendAjax(page.value,'text/xml');
 
-      if(type === "text/xml")
+      if(type.value === "text/xml")
       {
         sendButton.addEventListener('click', sendXML)
       } else {
@@ -75,7 +75,7 @@
   <section id="top">
     <h3>Status Code Tests</h3>
     <select id="page">
-      <option value="/success" selected>Success</option>
+      <option value="/success">Success</option>
       <option value="/badRequest">Bad Request</option>
       <option value="/unauthorized">Unauthorized</option>
       <option value="/forbidden">Forbidden</option>
@@ -84,7 +84,7 @@
       <option value="/notFound">Not Found</option>
     </select>
     <select id="type">
-      <option value="application/json" selected>JSON</option>
+      <option value="application/json">JSON</option>
       <option value="text/xml">XML</option>
     </select>
     <button id="send">Send</button>

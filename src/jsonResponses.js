@@ -14,7 +14,7 @@ const success = (request, response) => {
 
 const badRequest = (request, response, params) => {
   const responseJSON = {
-    message: 'this request has the require parameters',
+    message: 'This request has the require parameters',
   };
 
   if (!params.valid || params.valid !== 'true') {
@@ -29,7 +29,7 @@ const badRequest = (request, response, params) => {
 
 const notFound = (request, response) => {
   const responseJSON = {
-    message: 'the page you are looking for was not found.',
+    message: 'The page you are looking for was Not Found.',
     id: 'notFound',
   };
 

@@ -8,8 +8,8 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const urlStruct = {
   '/': htmlHandler.getIndex,
-  success: jsonHandler.success,
-  badRequest: jsonHandler.badRequest,
+  '/success': jsonHandler.success,
+  '/badRequest': jsonHandler.badRequest,
   notFound: jsonHandler.notFound,
   '/style.css': htmlHandler.getStyle,
 };
