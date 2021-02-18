@@ -13,18 +13,34 @@
 
       const h1 = document.createElement('h1');
       const p = document.createElement('p');
+      const obj = JSON.parse(xhr.response);
       
       if(type === 'application/json'){
-        const obj = JSON.parse(xhr.response);
 
+        switch(xhr.status){
+          case 200:
+            content.innerHTML = '<b>Success!</b>';
+            break;
+          case 400:
+            content.innerHTML = '<b>Bad Request :(</b>';
+            break;
+          case 404:
+            content.innerHTML = '<b>Resource Not Found, Dawg!</b>';
+            break;
+          default:
+            content.innerHTML = '<b>Error code not implemented by client!</b>';
+            break;
+        }
       } else if (type === 'text/xml'){
         
       }
+
+      content.innerHTML += `<p>${obj.message}</p>`;
+
     };
 
     const sendAjax = (url, acceptedType) => {
       const xhr = new XMLHttpRequest();
-
       xhr.open('GET', url);
       xhr.setRequestHeader('Accept', acceptedType);
 
@@ -40,7 +56,7 @@
       const sendButton = document.querySelector("#send");
 
       const sendJSON = () => sendAjax(page,'application/json');
-      const sendXML = () => sendAjax(page,'text/xml');
+      //const sendXML = () => sendAjax(page,'text/xml');
 
       if(type === "text/xml")
       {
