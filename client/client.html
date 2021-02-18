@@ -10,6 +10,7 @@
     const handleResponse = (xhr) => {
       const type = xhr.getResponseHeader('content-type');
       const content = document.querySelector('#content');
+      console.log(type);
 
       const h1 = document.createElement('h1');
       const p = document.createElement('p');
@@ -32,7 +33,7 @@
             break;
         }
       } else if (type === 'text/xml'){
-        
+        const message = xhr.responseXML.querySelector('message').textContent;
       }
 
       content.innerHTML += `<p>${obj.message}</p>`;
@@ -42,7 +43,9 @@
     const sendAjax = (url, acceptedType) => {
       const xhr = new XMLHttpRequest();
       xhr.open('GET', url);
+      console.log(acceptedType);
       xhr.setRequestHeader('Accept', acceptedType);
+      console.log(acceptedType);
 
       xhr.onload = () => handleResponse(xhr);
       xhr.send();
@@ -57,13 +60,18 @@
 
       const sendJSON = () => sendAjax(page.value,'application/json');
       const sendXML = () => sendAjax(page.value,'text/xml');
-
-      if(type.value === "text/xml")
-      {
-        sendButton.addEventListener('click', sendXML)
-      } else {
-        sendButton.addEventListener('click', sendJSON);
+      
+      const sendType = () => {
+        if(type.value === "text/xml")
+        {
+          sendXML();
+        } else {
+          sendJSON();
+        }
       }
+      
+      sendButton.addEventListener('click', sendType);
+        
 
     };
 
