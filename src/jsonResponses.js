@@ -50,18 +50,34 @@ const unauthorized = (request, response, acceptedTypes, params) => {
   const responseXML = `<response> <message> Missing loggedIn query parameter set to yes </message> <id>unauthorized</id> </response>`;
 
   if(acceptedTypes[0] ===  'text/xml'){
-    return respondXML(request, response, 400, responseXML);
+    return respondXML(request, response, 401, responseXML);
   }
 
   if (!params.loggedIn || params.loggedIn !== 'yes') {
     responseJSON.message = 'Missing loggedIn query parameter set to yes';
     responseJSON.id = 'unauthorized';
 
-    return respondJSON(request, response, 400, responseJSON);
+    return respondJSON(request, response, 401, responseJSON);
   }
 
   return respondJSON(request, response, 200, responseJSON);
 };
+
+const forbidden = (request, response, acceptedTypes) => {
+  const responseJSON = {
+    message: 'You do not have access to this content',
+    id: 'forbidden',
+  };
+  const responseXML = `<response> <message>You do not have access to this content</message> <id>forbidden</id> </response>`;
+
+  if(acceptedTypes[0] ===  'text/xml'){
+    return respondXML(request, response, 403, responseXML);
+  }else {
+    return respondJSON(request, response, 403, responseJSON);
+  }
+};
+
+
 
 const notFound = (request, response) => {
   const responseJSON = {
@@ -69,12 +85,13 @@ const notFound = (request, response) => {
     id: 'notFound',
   };
 
-  return respondJSON(request, response, 400, responseJSON);
+  return respondJSON(request, response, 404, responseJSON);
 };
 
 module.exports = {
   success,
   badRequest,
   unauthorized,
+  forbidden,
   notFound,
 };

@@ -11,6 +11,7 @@ const urlStruct = {
   '/success': jsonHandler.success,
   '/badRequest': jsonHandler.badRequest,
   '/unauthorized': jsonHandler.unauthorized,
+  '/forbidden': jsonHandler.forbidden,
   notFound: jsonHandler.notFound,
   '/style.css': htmlHandler.getStyle,
 };
