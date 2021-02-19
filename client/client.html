@@ -14,50 +14,32 @@
 
       const h1 = document.createElement('h1');
       const p = document.createElement('p');
-      const obj = JSON.parse(xhr.response);
-      const parser = new DOMParser();
-      const xm = parser.parseFromString(xhr.response, 'text/xml');
       
-      if(type === 'application/json'){
-
-        switch(xhr.status){
-          case 200:
-            content.innerHTML = '<b>Success!</b>';
-            break;
-          case 400:
-            content.innerHTML = '<b>Bad Request :(</b>';
-            break;
-          case 404:
-            content.innerHTML = '<b>Resource Not Found, Dawg!</b>';
-            break;
-          default:
-            content.innerHTML = '<b>Error code not implemented by client!</b>';
-            break;
-        }
-        content.innerHTML += `<p>${obj.message}</p>`;
-
-      } else if (type === 'text/xml'){
-
-        switch(xhr.status){
-          case 200:
-            content.innerHTML = '<b>Success!</b>';
-            break;
-          case 400:
-            content.innerHTML = '<b>Bad Request :(</b>';
-            break;
-          case 404:
-            content.innerHTML = '<b>Resource Not Found, Dawg!</b>';
-            break;
-          default:
-            content.innerHTML = '<b>Error code not implemented by client!</b>';
-            break;
-        }
-        //const message = xhr.responseXML.querySelector('message').textContent;
-        console.dir(xm);
-        content.innerHTML += `<p>${xm.message}</p>`;
+      switch(xhr.status){
+        case 200:
+          content.innerHTML = '<b>Success!</b>';
+          break;
+        case 400:
+          content.innerHTML = '<b>Bad Request :(</b>';
+          break;
+        case 404:
+          content.innerHTML = '<b>Resource Not Found, Dawg!</b>';
+          break;
+        default:
+          content.innerHTML = '<b>Error code not implemented by client!</b>';
+          break;
+      }
+              
+      let message;
+              
+      if(type === 'application/json'){          
+        const obj = JSON.parse(xhr.response);
+        message = obj.message;
+      }else if (type === 'text/xml'){
+        message = xhr.responseXML.querySelector('message').textContent;
       }
 
-
+      content.innerHTML += `<p>${message}</p>`;
     };
 
     const sendAjax = (url, acceptedType) => {

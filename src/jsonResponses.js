@@ -1,12 +1,12 @@
-const respondJSON = (request, response, status, object) => {
+const respondJSON = (request, response, status, content) => {
   response.writeHead(status, { 'Content-Type': 'application/json' });
-  response.write(JSON.stringify(object));
+  response.write(JSON.stringify(content));
   response.end();
 };
 
-const respondXML = (request, response, status, object) => {
+const respondXML = (request, response, status, content) => {
   response.writeHead(status, { 'Content-Type': 'text/xml' });
-  response.write(JSON.stringify(object));
+  response.write(content);
   response.end();
 };
 
@@ -16,7 +16,8 @@ const success = (request, response, acceptedTypes) => {
   };
 
   if (acceptedTypes[0] === 'text/xml') {
-    respondXML(request, response, 200, responseJSON);
+    let responseXML = `<response> This is a successful response </response>`;
+    respondXML(request, response, 200, responseXML);
   } else {
     respondJSON(request, response, 200, responseJSON);
   }
