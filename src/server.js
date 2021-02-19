@@ -13,6 +13,8 @@ const urlStruct = {
   '/unauthorized': jsonHandler.unauthorized,
   '/forbidden': jsonHandler.forbidden,
   '/internal': jsonHandler.internal,
+  '/notImplemented': jsonHandler.notImplemented,
+  '/notFound': jsonHandler.notFound,
   notFound: jsonHandler.notFound,
   '/style.css': htmlHandler.getStyle,
 };

@@ -29,7 +29,7 @@ const badRequest = (request, response, acceptedTypes, params) => {
   };
   const responseXML = `<response> <message> Missing valid query parameter set equal to true </message> <id>badRequest</id> </response>`;
 
-  if(acceptedTypes[0] ===  'text/xml'){
+  if(acceptedTypes[0] === 'text/xml'){
     return respondXML(request, response, 400, responseXML);
   }
   
@@ -49,7 +49,7 @@ const unauthorized = (request, response, acceptedTypes, params) => {
   };
   const responseXML = `<response> <message> Missing loggedIn query parameter set to yes </message> <id>unauthorized</id> </response>`;
 
-  if(acceptedTypes[0] ===  'text/xml'){
+  if(acceptedTypes[0] === 'text/xml'){
     return respondXML(request, response, 401, responseXML);
   }
 
@@ -70,7 +70,7 @@ const forbidden = (request, response, acceptedTypes) => {
   };
   const responseXML = `<response> <message>You do not have access to this content</message> <id>forbidden</id> </response>`;
 
-  if(acceptedTypes[0] ===  'text/xml'){
+  if(acceptedTypes[0] === 'text/xml'){
     return respondXML(request, response, 403, responseXML);
   }else {
     return respondJSON(request, response, 403, responseJSON);
@@ -84,21 +84,39 @@ const internal = (request, response, acceptedTypes) => {
   };
   const responseXML = `<response> <message>Internal Server Error. Something went wrong</message> <id>internalError</id> </response>`;
 
-  if(acceptedTypes[0] ===  'text/xml'){
+  if(acceptedTypes[0] === 'text/xml'){
     return respondXML(request, response, 500, responseXML);
   }else {
     return respondJSON(request, response, 500, responseJSON);
   }
+};
 
-}
-
-const notFound = (request, response) => {
+const notImplemented = (request, response, acceptedTypes) => {
   const responseJSON = {
-    message: 'The page you are looking for was Not Found.',
+    message: 'A get request for this page has not been implemented yet. Check again later for updated content',
+    id: 'notImplemented',
+  };
+  const responseXML = `<response> <message>A get request for this page has not been implemented yet. Check again later for updated content</message> <id>notImplemented</id> </response>`;
+
+  if(acceptedTypes[0] === 'text/xml'){
+    return respondXML(request, response, 501, responseXML);
+  }else {
+    return respondJSON(request, response, 501, responseJSON);
+  }
+};
+
+const notFound = (request, response, acceptedTypes) => {
+  const responseJSON = {
+    message: 'The page you are looking for was not Found',
     id: 'notFound',
   };
+  const responseXML = `<response> <message>The page you are looking for was not Found</message> <id>notFound</id> </response>`;
 
-  return respondJSON(request, response, 404, responseJSON);
+  if(acceptedTypes[0] === 'text/xml'){
+    return respondXML(request, response, 404, responseXML);
+  }else {
+    return respondJSON(request, response, 404, responseJSON);
+  }
 };
 
 module.exports = {
@@ -107,5 +125,6 @@ module.exports = {
   unauthorized,
   forbidden,
   internal,
+  notImplemented,
   notFound,
 };
