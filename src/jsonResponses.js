@@ -77,7 +77,20 @@ const forbidden = (request, response, acceptedTypes) => {
   }
 };
 
+const internal = (request, response, acceptedTypes) => {
+  const responseJSON = {
+    message: 'Internal Server Error. Something went wrong',
+    id: 'internalError',
+  };
+  const responseXML = `<response> <message>Internal Server Error. Something went wrong</message> <id>internalError</id> </response>`;
 
+  if(acceptedTypes[0] ===  'text/xml'){
+    return respondXML(request, response, 500, responseXML);
+  }else {
+    return respondJSON(request, response, 500, responseJSON);
+  }
+
+}
 
 const notFound = (request, response) => {
   const responseJSON = {
@@ -93,5 +106,6 @@ module.exports = {
   badRequest,
   unauthorized,
   forbidden,
+  internal,
   notFound,
 };
