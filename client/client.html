@@ -36,7 +36,9 @@
         const obj = JSON.parse(xhr.response);
         message = obj.message;
       }else if (type === 'text/xml'){
-        message = xhr.responseXML.querySelector('message').textContent;
+        console.log(xhr.response);
+        //message = xhr.responseXML.querySelector('message').textContent;
+        message = xhr.response;
       }
 
       content.innerHTML += `<p>${message}</p>`;
