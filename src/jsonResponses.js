@@ -11,14 +11,13 @@ const respondXML = (request, response, status, content) => {
 };
 
 const success = (request, response, acceptedTypes) => {
-  const responseJSON = {
-    message: 'This is a successful response',
-  };
-
   if (acceptedTypes[0] === 'text/xml') {
-    let responseXML = `<response> This is a successful response </response>`;
+    const responseXML = `<response> <message> This is a successful response </message> </response>`;
     respondXML(request, response, 200, responseXML);
   } else {
+    const responseJSON = {
+      message: 'This is a successful response',
+    };
     respondJSON(request, response, 200, responseJSON);
   }
 };
